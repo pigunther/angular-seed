@@ -13,7 +13,8 @@ import {TabsExampleModule} from "./tab/TabsExample.module";
 
 
 @NgModule({
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     CoreModule,
     HttpClientModule,
     AppRoutingModule,

@@ -9,13 +9,18 @@ import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
+import {MyTabViewModule, TabsExampleModule} from "./tab/TabsExample.module";
 
 
 @NgModule({
-  imports: [BrowserModule, CoreModule,
-    HttpClientModule, AppRoutingModule,
-    AboutModule, HomeModule,
-    SharedModule.forRoot()],
+  imports: [BrowserModule,
+    CoreModule,
+    HttpClientModule,
+    AppRoutingModule,
+    AboutModule,
+    HomeModule,
+    SharedModule.forRoot(),
+    TabsExampleModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

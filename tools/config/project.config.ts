@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { SeedConfig } from './seed.config';
+import {ExtendPackages} from "./seed.config.interfaces";
 // import { ExtendPackages } from './seed.config.interfaces';
 
 /**
@@ -10,6 +11,16 @@ import { SeedConfig } from './seed.config';
 export class ProjectConfig extends SeedConfig {
 
   PROJECT_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'project');
+
+  FONTS_DEST = `${this.APP_DEST}/fonts`;
+  FONTS_SRC = [
+    'node_modules/bootstrap/dist/fonts/**',
+    'node_modules/font-awesome/fonts/**'
+  ];
+
+  SCSS_SRC = `${this.APP_SRC}/scss`;
+  ENABLE_SCSS=true;
+
 
   constructor() {
     super();
@@ -22,6 +33,8 @@ export class ProjectConfig extends SeedConfig {
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
+      { src: 'primeng/resources/primeng.css', inject: true },
+      { src: 'font-awesome/css/font-awesome.min.css', inject: true },
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
     ];
@@ -58,6 +71,18 @@ export class ProjectConfig extends SeedConfig {
 
     /* Add to or override NPM module configurations: */
     // this.PLUGIN_CONFIGS['browser-sync'] = { ghostMode: false };
+
+    const additionalPackages: ExtendPackages[] = [
+      {
+        name: 'primeng',
+        path: 'node_modules/primeng',
+        packageMeta: {
+          defaultExtension: 'js'
+        }
+      }];
+
+    this.addPackagesBundles(additionalPackages);
   }
+
 
 }

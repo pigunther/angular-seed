@@ -152,8 +152,12 @@
     "@angular/router": "^5.2.3",
     "@angular/service-worker": "^5.2.3",
     "core-js": "^2.5.3",
+    "font-awesome": "^4.7.0",
     "intl": "^1.2.5",
+    "node-sass": "^4.7.2",
+    "primeng": "^5.2.0",
     "rxjs": "^5.5.3",
+    "sass-loader": "^6.0.7",
     "systemjs": "0.21.0",
     "zone.js": "0.8.20"
   }

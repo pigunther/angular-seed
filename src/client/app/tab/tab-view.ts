@@ -15,7 +15,7 @@ import {TabIndexEvent, TabEvent} from "../interfaces/interfaces"
 })
 export class MyTabView implements AfterContentInit{
 
-  tabs: MyTabPanel[]
+  tabs: MyTabPanel[];
 
 
   @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>; //todo read about QueryList
@@ -67,7 +67,6 @@ export class MyTabView implements AfterContentInit{
       tab.selected = true;
     }
     this.onClose.emit({startEvent: event.startEvent, index: index});
-    //todo why pass only 1 argument
   }
 
 }

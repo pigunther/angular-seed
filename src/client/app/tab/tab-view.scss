@@ -10,7 +10,7 @@ button {
   border: none;
 }
 
-.tab {
+.my-tab-view {
   &__top {
     display: flex;
     justify-content: flex-start;
@@ -31,6 +31,10 @@ button {
 
     & div {
       margin-left: 10px;
+    }
+
+    &_disabled {
+      color: #898989;
     }
   }
 

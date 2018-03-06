@@ -1,8 +1,8 @@
-
-:host {
-  margin-top: 10px;
-  border-bottom: 1px solid gray;
-}
+//
+//:host {
+//  margin-top: 10px;
+//  border-bottom: 1px solid gray;
+//}
 
 button {
   background: none;
@@ -15,6 +15,8 @@ button {
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
+    margin-top: 10px;
+    border-bottom: 1px solid gray;
   }
   &__header{
     border: 1px solid gray;

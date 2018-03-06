@@ -1,9 +1,0 @@
-<div *ngFor="let tab of tabs">
-  <button [class]="'tab__header'" (click)="tabClick(tab)" *ngIf="!tab.closed" [disabled]="tab.disabled">
-    <p>{{tab.header}}</p>
-    <div *ngIf="tab.closable" (click)="tabClose(tab)">
-      <i class="fas fa-window-close" ></i>
-    </div>
-  </button>
-</div>
-

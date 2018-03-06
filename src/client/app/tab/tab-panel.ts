@@ -1,11 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 
 @Component({
   moduleId: module.id,
-  selector: 'my-tabPanel',
-  templateUrl: 'myTabPanel.html',
-  styleUrls: ['myTabView.css']
+  encapsulation: ViewEncapsulation.None,
+  selector: 'my-tab-panel',
+  templateUrl: 'tab-panel.html',
+  styleUrls: ['tab-view.css']
 })
 export class MyTabPanel {
 

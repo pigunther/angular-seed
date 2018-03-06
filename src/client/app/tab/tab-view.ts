@@ -1,20 +1,22 @@
-import {AfterContentInit, Component, ContentChildren, EventEmitter, Output, QueryList} from '@angular/core';
-import {MyTabPanel} from "./myTabPanel";
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {MyTabHeader} from "./myTabHeader";
+import {
+  AfterContentInit, Component, ContentChildren, EventEmitter, Output, QueryList,
+  ViewEncapsulation
+} from '@angular/core';
+import {MyTabPanel} from "./tab-panel";
 
 @Component({
   moduleId: module.id,
-  selector: 'my-tabView',
-  templateUrl: 'myTabView.html',
-  styleUrls: [ 'myTabView.css']
+  encapsulation: ViewEncapsulation.None,
+  selector: 'my-tab-view',
+  templateUrl: 'tab-view.html',
+  styleUrls: [ 'tab-view.css']
 })
 export class MyTabView implements AfterContentInit{
 
   tabs: MyTabPanel[];
 
   @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>; //todo read about QueryList
+  //todo зачем подписывать на change у queryList
 
   @Output() onChange = new EventEmitter<any>();
   @Output() onClose  = new EventEmitter<any>();
@@ -65,10 +67,3 @@ export class MyTabView implements AfterContentInit{
 }
 
 
-@NgModule({
-  imports: [CommonModule],
-  declarations: [MyTabView, MyTabPanel, MyTabHeader],
-  exports: [MyTabView, MyTabPanel, MyTabHeader]
-})
-export class MyTabViewModule {
-}

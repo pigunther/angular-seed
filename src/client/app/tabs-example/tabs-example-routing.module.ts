@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {MyTabView} from "./myTabView";
-import {TabsExampleComponent} from "./TabsExample.component";
+import {MyTabView} from "../tab/tab-view";
+import {TabsExampleComponent} from "./tabs-example.component";
 
 @NgModule({
   imports: [

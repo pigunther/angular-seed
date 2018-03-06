@@ -18,7 +18,7 @@ export class MyTabView implements AfterContentInit{
   tabs: MyTabPanel[];
 
 
-  @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>; //todo read about QueryList
+  @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>;
   //todo зачем подписывать на change у queryList
 
   @Output() onChange = new EventEmitter<TabIndexEvent>();

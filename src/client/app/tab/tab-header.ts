@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {MyTabPanel} from "./tab-panel";
+import {TabEvent} from "../interfaces/interfaces"
 
 
 @Component({
@@ -13,25 +14,15 @@ export class MyTabHeader {
 
   @Input() tabs: MyTabPanel[];
 
-  @Output() onTabClick = new EventEmitter<any>();
-  @Output() onTabClose = new EventEmitter<any>();
+  @Output() onTabClick = new EventEmitter<TabEvent>();
+  @Output() onTabClose = new EventEmitter<TabEvent>();
 
-  closeClick: boolean = false;
 
   tabClick(event:any, tab: any) {
-    // console.log('tabClick');
-    // console.log(event);
-    if (!this.closeClick) {
-      if (!tab.selected) this.onTabClick.emit({startEvent: event, tab: tab});
-    } else {
-
-      if (!tab.disabled) this.onTabClose.emit({startEvent: event, tab: tab});
-      this.closeClick = false;
-    }
+    if (!tab.selected && !tab.disabled) this.onTabClick.emit({startEvent: event, tab: tab});
   }
 
-  tabClose() {
-    this.closeClick = true;
-    //if (!tab.disabled) this.onTabClose.emit({startEvent: event, tab: tab});
+  tabClose(event:any, tab: any) {
+    if (!tab.disabled) this.onTabClose.emit({startEvent: event, tab: tab});
   }
 }

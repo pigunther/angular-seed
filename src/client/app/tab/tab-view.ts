@@ -3,6 +3,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {MyTabPanel} from "./tab-panel";
+import {TabIndexEvent, TabEvent} from "../interfaces/interfaces"
+
 
 @Component({
   moduleId: module.id,
@@ -13,13 +15,14 @@ import {MyTabPanel} from "./tab-panel";
 })
 export class MyTabView implements AfterContentInit{
 
-  tabs: MyTabPanel[];
+  tabs: MyTabPanel[]
+
 
   @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>; //todo read about QueryList
   //todo зачем подписывать на change у queryList
 
-  @Output() onChange = new EventEmitter<any>();
-  @Output() onClose  = new EventEmitter<any>();
+  @Output() onChange = new EventEmitter<TabIndexEvent>();
+  @Output() onClose  = new EventEmitter<TabIndexEvent>();
 
   ngAfterContentInit() {
     this.tabs = this.tabPanels.toArray();
@@ -30,10 +33,12 @@ export class MyTabView implements AfterContentInit{
       tab.selected = false;
     }
     index = (index === -1)? 0 : index;
-    this.tabs[index || 0].selected=true;
+    this.tabs[index].selected=true;
   }
   //todo read about event
-  onTabClick(event: Event, tab: MyTabPanel) {
+  onTabClick(event: TabEvent) {
+    console.log(event);
+    let tab = event.tab;
     let index = this.tabs.findIndex(function(el) {
       return el == tab;
     });
@@ -43,10 +48,11 @@ export class MyTabView implements AfterContentInit{
     this.tabs[index].selected = true;
     this.tabs[selectedIndex].selected = false;
 
-    this.onChange.emit({startEvent: event, index: index});
+    this.onChange.emit({startEvent: event.startEvent, index: index});
   }
 
-  onTabClose(event: Event, tab: MyTabPanel) {
+  onTabClose(event: TabEvent) {
+    let tab = event.tab;
     let index = this.tabs.findIndex(function(el) {
       return el == tab;
     });
@@ -60,7 +66,7 @@ export class MyTabView implements AfterContentInit{
       });
       tab.selected = true;
     }
-    this.onClose.emit({startEvent: event, index: index});
+    this.onClose.emit({startEvent: event.startEvent, index: index});
     //todo why pass only 1 argument
   }
 

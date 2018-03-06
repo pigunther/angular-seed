@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import {TabIndexEvent} from "../interfaces/interfaces";
 
 
 @Component({
@@ -12,7 +13,7 @@ export class TabsExampleComponent {
 
   logs: string[] = [];
 
-  onTabChange(event: any) {
+  onTabChange(event: TabIndexEvent) {
     console.log('change:');
     console.log(event);
 
@@ -20,7 +21,7 @@ export class TabsExampleComponent {
 
   }
 
-  onTabClose(event: any) {
+  onTabClose(event: TabIndexEvent) {
     console.log('close:');
     console.log(event);
     this.logs.unshift(`close: header=${event.startEvent.target.parentElement.parentElement.parentElement.innerText}, index=${event.index}`);

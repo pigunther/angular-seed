@@ -18,11 +18,11 @@ export class MyTabHeader {
   @Output() onTabClose = new EventEmitter<TabEvent>();
 
 
-  tabClick(event:any, tab: any) {
+  tabClick(tab: MyTabPanel) {
     if (!tab.selected && !tab.disabled) this.onTabClick.emit({startEvent: event, tab: tab});
   }
 
-  tabClose(event:any, tab: any) {
+  tabClose(tab: MyTabPanel) {
     if (!tab.disabled) this.onTabClose.emit({startEvent: event, tab: tab});
   }
 }

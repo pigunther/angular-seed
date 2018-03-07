@@ -1,0 +1,27 @@
+//
+//:host {
+//  margin-top: 10px;
+//  border-bottom: 1px solid gray;
+//}
+
+button {
+  background: none;
+  padding: 0;
+  border: none;
+}
+
+.my-tab-view {
+  &__top {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    margin-top: 10px;
+    border-bottom: 1px solid gray;
+  }
+  //ul с модификатором сюда
+
+}
+
+//ul {
+//  list-style: none;
+//}

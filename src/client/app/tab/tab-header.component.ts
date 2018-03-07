@@ -1,14 +1,14 @@
 import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
-import {MyTabPanel} from "./tab-panel";
-import {TabEvent} from "../interfaces/interfaces"
+import {MyTabPanel} from "./tab-panel.component";
+import {TabEvent} from "./tap-panel-events.model";
 
-
+// todo write slider
 @Component({
   moduleId: module.id,
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
   selector: 'my-tab-header',
-  templateUrl: 'tab-header.html',
-  styleUrls: ['tab-view.css']
+  templateUrl: 'tab-header.component.html',
+  styleUrls: ['tab-header.component.css']
 })
 export class MyTabHeader {
 
@@ -21,7 +21,7 @@ export class MyTabHeader {
   tabClick(tab: MyTabPanel) {
     console.log('click tab');
     if (!tab.selected && !tab.disabled) this.onTabClick.emit({startEvent: event, tab: tab});
-    //todo event.stopPropagation() ? 
+    //todo event.stopPropagation() ?
   }
 
   tabClose(tab: MyTabPanel) {

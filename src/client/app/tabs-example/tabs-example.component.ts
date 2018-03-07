@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import {TabIndexEvent} from "../interfaces/interfaces";
+import {Component, ViewEncapsulation} from '@angular/core';
+import {IndexEvent} from "../tab/tap-panel-events.model";
 
 
 @Component({
@@ -7,24 +7,24 @@ import {TabIndexEvent} from "../interfaces/interfaces";
   encapsulation: ViewEncapsulation.None,
   selector: 'tabs-example',
   templateUrl: 'tabs-example.component.html',
-  styleUrls: [ 'tabs-example.component.css']
+  styleUrls: ['tabs-example.component.css']
 })
 export class TabsExampleComponent {
 
   logs: string[] = [];
 
-  onTabChange(event: TabIndexEvent) {
+  onTabChange(event: IndexEvent) {
     console.log('change:');
     console.log(event);
 
-    this.logs.unshift(`change: header=${event.startEvent.target.innerText}, index=${event.index}`);
+    this.logs.unshift(`change: header=${event.header}, index=${event.index}`);
 
   }
 
-  onTabClose(event: TabIndexEvent) {
+  onTabClose(event: IndexEvent) {
     console.log('close:');
     console.log(event);
-    this.logs.unshift(`close: header=${event.startEvent.target.parentElement.parentElement.parentElement.innerText}, index=${event.index}`);
+    this.logs.unshift(`close: header=${event.header}, index=${event.index}`);
   }
 
 }

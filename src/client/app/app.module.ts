@@ -10,18 +10,21 @@ import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import {TabsExampleModule} from "./tabs-example/tabs-example.module";
+import {FormsModule} from "@angular/forms";
+import {SliderExampleModule} from "./slider-example/slider-example.module";
 
 
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule, FormsModule,
     CoreModule,
     HttpClientModule,
     AppRoutingModule,
     AboutModule,
     HomeModule,
     SharedModule.forRoot(),
-    TabsExampleModule],
+    TabsExampleModule,
+    SliderExampleModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

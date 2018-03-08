@@ -1,0 +1,24 @@
+<p>default slider (min=0, max=100)</p>
+<my-slider [(val)]="val" (onChange)="onSliderStop($event)"></my-slider>
+<div>current val={{val}}</div>
+
+
+<br/>
+
+<p>slider with min=10 max=1000</p>
+<my-slider [(val)]="val2" [max]="1000" [min]="10" (onChange)="onSliderStop($event)"></my-slider>
+<div>current val={{val2}}</div>
+<br/>
+
+<p>slider with step 7 min=0 max=100</p>
+<my-slider [(val)]="val3" [step]="7" (onChange)="onSliderStop($event)" ></my-slider>
+<div>current val={{val3}}</div>
+<br/>
+
+
+<div class="console">
+  <div *ngFor="let log of logs">
+    {{log}}
+  </div>
+</div>
+

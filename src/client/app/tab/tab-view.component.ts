@@ -43,7 +43,7 @@ export class MyTabView implements AfterContentInit {
 
   //todo read about event
   onTabClick(event: TabEvent) {
-    console.log(event);
+    console.log(event.startEvent);
     let tab = event.tab;
     let index = this.tabs.findIndex(function (el) {
       return el == tab;

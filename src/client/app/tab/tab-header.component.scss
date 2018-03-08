@@ -1,7 +1,6 @@
 
 .my-tab-header {
   &__item {
-    user-select: none;
     border: 1px solid gray;
     border-bottom: 0;
     border-top-left-radius: 5px;
@@ -11,13 +10,24 @@
     display: flex;
     align-items: center;
     background-color: white;
+    height: 50px;
 
     & div {
       margin-left: 10px;
     }
 
+    & p {
+      user-select: none;
+      //cursor: none;
+    }
+
     &_disabled {
       color: #898989;
+    }
+
+    &_selected {
+      color: blue;
+      border-color: blue;
     }
   }
 }

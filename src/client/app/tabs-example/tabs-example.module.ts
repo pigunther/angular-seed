@@ -6,7 +6,7 @@ import {TabsExampleComponent} from "./tabs-example.component";
 
 
 @NgModule({
-  imports: [CommonModule, MyTabViewModule, TabsExampleRoutingModule, MyTabViewModule],
+  imports: [CommonModule, MyTabViewModule, TabsExampleRoutingModule],
   declarations: [TabsExampleComponent],
   exports: [TabsExampleComponent]
 })

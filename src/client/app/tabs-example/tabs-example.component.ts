@@ -14,16 +14,10 @@ export class TabsExampleComponent {
   logs: string[] = [];
 
   onTabChange(event: IndexEvent) {
-    console.log('change:');
-    console.log(event);
-
     this.logs.unshift(`change: header=${event.header}, index=${event.index}`);
-
   }
 
   onTabClose(event: IndexEvent) {
-    console.log('close:');
-    console.log(event);
     this.logs.unshift(`close: header=${event.header}, index=${event.index}`);
   }
 

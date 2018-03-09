@@ -16,7 +16,7 @@ import {
   templateUrl: 'tab-panel.component.html',
   styleUrls: ['tab-panel.component.css']
 })
-export class MyTabPanel implements OnInit, AfterContentInit, AfterViewInit {
+export class MyTabPanel implements AfterContentInit, AfterViewInit {
 
   @Input() header: string;
 
@@ -31,20 +31,12 @@ export class MyTabPanel implements OnInit, AfterContentInit, AfterViewInit {
   closed: boolean;
 
 
-  ngOnInit() {
-    console.log('tab ' + this.header + ' was initialized with selected ' + this.selected);
-  }
-
   ngAfterContentInit() {
     this.innerTemplate = this.customContent;
-    console.log('tab ' + this.header + ' content was initialized with selected ' + this.selected);
   }
 
   ngAfterViewInit() {
     this.innerTemplate = this.customContent;
-    console.log('tab ' + this.header + ' view was initialized');
   }
-  // ngAfterContentChecked() {
-  //   console.log('tab ' + this.header + ' checked content ');
-  // }
+
 }

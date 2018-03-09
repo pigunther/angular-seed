@@ -17,11 +17,7 @@ export class SliderExampleComponent {
   val3: number = 0;
 
   onSliderStop(event: ValueChangeEvent) {
-    console.log('change:');
-    console.log(event);
-
     this.logs.unshift(`change: value=${event.value}`);
-
   }
 
 

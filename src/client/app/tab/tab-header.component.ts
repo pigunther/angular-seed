@@ -19,13 +19,10 @@ export class MyTabHeader {
 
 
   tabClick(event: Event, tab: MyTabPanel) {
-    console.log('click tab');
     if (!tab.selected && !tab.disabled) this.onTabClick.emit({startEvent: event, tab: tab});
-    //todo event.stopPropagation() ?
   }
 
   tabClose(event: Event, tab: MyTabPanel) {
-    console.log('close tab');
     if (!tab.disabled) this.onTabClose.emit({startEvent: event, tab: tab});
   }
 }

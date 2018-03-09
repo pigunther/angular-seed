@@ -24,7 +24,6 @@ export class MyTabView implements AfterContentInit {
 
 
   @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>;
-  //todo зачем подписывать на change у queryList
 
   @Output() onChange = new EventEmitter<IndexEvent>();
   @Output() onClose = new EventEmitter<IndexEvent>();
@@ -41,9 +40,7 @@ export class MyTabView implements AfterContentInit {
     this.tabs[index].selected = true;
   }
 
-  //todo read about event
   onTabClick(event: TabEvent) {
-    console.log(event.startEvent);
     let tab = event.tab;
     let index = this.tabs.findIndex(function (el) {
       return el == tab;

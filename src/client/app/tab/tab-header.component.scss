@@ -1,16 +1,20 @@
+$height: 50px;
+$border-radius: 5px;
+$disabled-color: #898989;
+$selected-color: blue;
 
 .my-tab-header {
   &__item {
     border: 1px solid gray;
     border-bottom: 0;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    padding: 5px 10px 0 10px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    padding: 5px 10px 5px 10px;
     margin-right: 5px;
     display: flex;
     align-items: center;
     background-color: white;
-    height: 50px;
+    height: $height;
 
     & div {
       margin-left: 10px;
@@ -18,16 +22,15 @@
 
     & p {
       user-select: none;
-      //cursor: none;
     }
 
     &_disabled {
-      color: #898989;
+      color: $disabled-color;
     }
 
     &_selected {
-      color: blue;
-      border-color: blue;
+      color: $selected-color;
+      border-color: $selected-color;
     }
   }
 }

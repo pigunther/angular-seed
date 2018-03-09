@@ -1,17 +1,20 @@
+$slider-width: 200px;
+$height: 10px;
+$slider-height: 2px;
+
 .slider {
   height: 0;
-  border: 2px solid gray;
+  border: $slider-height solid gray;
   margin: 10px;
-  width: 200px;
+  width: $slider-width;
 
   &__circle {
-    border-radius: 10px;
-    height: 0px;
-    width: 0px;
-    border: 10px solid blue;
-    /* vertical-align: top; */
-    margin-top: -10px;
+    border-radius: $height;
+    height: 0;
+    width: 0;
+    border: $height solid blue;
 
     position: relative;
+    top: -$height;
   }
 }

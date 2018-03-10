@@ -16,7 +16,7 @@ import {ValueChangeEvent} from "./slider-event.model";
 
 @Component({
   moduleId: module.id,
-  encapsulation: ViewEncapsulation.Emulated,
+  encapsulation: ViewEncapsulation.None,
   selector: 'my-slider',
   templateUrl: 'slider.component.html',
   styleUrls: ['slider.component.css'],
@@ -56,7 +56,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
   circleRad: number;
   circlePos: number = 0;
 
-  circleMoveFlag: boolean = false;
+  private circleMoveFlag: boolean = false;
 
   documentMouseMoveListener: Function;
   documentMouseUpListener: Function;
@@ -64,13 +64,11 @@ export class MySlider implements AfterViewInit, OnDestroy {
   constructor(private renderer: Renderer2, private ngZone: NgZone) {
   }
 
-
   ngAfterViewInit() {
     this.slider = this.circle.nativeElement.parentElement;
     this.circleRad = +this.circle.nativeElement.clientLeft;
-    this.circleStartPos = this.slider.offsetLeft;
     this.sliderLen = this.slider.clientLeft + this.slider.clientWidth;
-
+    this.initStartPos();
 
     if (this.max != undefined && this.min != undefined) {
       this.circlePos = this.min;
@@ -82,13 +80,21 @@ export class MySlider implements AfterViewInit, OnDestroy {
     this.setPosition(-this.circleRad);
   }
 
+  initStartPos() {
+    this.circleStartPos = this.slider.offsetLeft;
+    let elem = this.slider;
+    while (elem) {
+      this.circleStartPos -= elem.scrollLeft;
+      elem = elem.parentElement;
+    }
+  }
 
   onMouseDown(event: Event) {
     this.circleMoveFlag = true;
 
     this.ngZone.runOutsideAngular(() => {
       if (!this.documentMouseMoveListener) {
-        this.documentMouseMoveListener = this.renderer.listen('document', 'mousemove', e => {
+        this.documentMouseMoveListener = this.renderer.listen('document', 'mousemove', (e: MouseEvent) => {
           if (this.circleMoveFlag) {
             this.setPosition(e.clientX);
           }
@@ -97,19 +103,17 @@ export class MySlider implements AfterViewInit, OnDestroy {
     });
 
     if (!this.documentMouseUpListener) {
-      this.documentMouseUpListener = this.renderer.listen('document', 'mouseup', e => {
+      this.documentMouseUpListener = this.renderer.listen('document', 'mouseup', (e: MouseEvent) => {
         if (this.circleMoveFlag) {
           this.circleMoveFlag = false;
           this.val = this.circlePos;
           this.onChange.emit({startEvent: e, value: this.circlePos});
-        } else {
-
         }
       });
     }
   }
 
-  onSliderClick(event: Event) {
+  onSliderClick(event: MouseEvent) {
     let tmpCirclePos = this.circlePos;
     this.setPosition(event.clientX);
     this.val = this.circlePos;
@@ -118,6 +122,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
   }
 
   setPosition(position: number) {
+    this.initStartPos();
     position = position - this.circleStartPos;
     if (this.step)
       position = Math.floor(position / (this.sliderLen / this.step)) * (this.sliderLen / this.step);

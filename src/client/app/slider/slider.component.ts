@@ -81,12 +81,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
   }
 
   initStartPos() {
-    this.circleStartPos = this.slider.offsetLeft;
-    let elem = this.slider;
-    while (elem) {
-      this.circleStartPos -= elem.scrollLeft;
-      elem = elem.parentElement;
-    }
+    this.circleStartPos = this.slider.getBoundingClientRect().left;
   }
 
   onMouseDown(event: Event) {

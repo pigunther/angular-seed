@@ -12,6 +12,7 @@ import { CoreModule } from './core/core.module';
 import {TabsExampleModule} from "./tabs-example/tabs-example.module";
 import {FormsModule} from "@angular/forms";
 import {SliderExampleModule} from "./slider-example/slider-example.module";
+import {ToolbarExampleModule} from "./toolbar-example/toolbar-example.module";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {SliderExampleModule} from "./slider-example/slider-example.module";
     HomeModule,
     SharedModule.forRoot(),
     TabsExampleModule,
-    SliderExampleModule],
+    SliderExampleModule,
+    ToolbarExampleModule],
   declarations: [AppComponent],
   providers: [{
     provide: APP_BASE_HREF,

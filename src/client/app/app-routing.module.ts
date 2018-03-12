@@ -6,13 +6,13 @@ import {TabsExampleComponent} from "./tabs-example/tabs-example.component";
   imports: [
     RouterModule.forRoot([
       {
-        path: 'MyTabView',
+        path: 'MyToolbarView',
         component: TabsExampleComponent,
         data: { title: 'Heroes List' }
       },
       {
         path: '',
-        redirectTo: '/MyTabView',
+        redirectTo: '/MyToolbarView',
         pathMatch: 'full'
       }
       /* define app module routes here, e.g., to lazily load a module

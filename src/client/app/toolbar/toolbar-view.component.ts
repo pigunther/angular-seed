@@ -2,15 +2,15 @@ import {
   AfterContentInit,
   AfterViewInit,
   Component,
-  ContentChild, ContentChildren,
+  ContentChild,
   ElementRef,
-  Input, QueryList, Renderer, Renderer2, TemplateRef,
+  Input,
+  Renderer2,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import {MyToolbarContent} from "./toolbar-content.component";
-import {MyToolbarHeader} from "./toolbar-header.component";
-import {unescape} from "querystring";
+import {HeaderSizeFlagEvent} from "./toolbar-events.model";
 
 
 @Component({
@@ -28,79 +28,43 @@ export class MyToolbarView implements AfterContentInit, AfterViewInit {
   @Input()
   color: string;
 
-  @Input()
-  title: string;
-
-  currentImgHeight: number = 150;
-
-  mouseYlast: number;
+  headerBigSizeFlag: boolean = true;
 
   headerStyle: any;
 
   @ViewChild('header', {read: ElementRef}) toolbarHeader: ElementRef;
-  // @ViewChild('img', {read: ElementRef}) toolbarHeader: ElementRef;
   @ContentChild(MyToolbarContent) toolbarContent: MyToolbarContent;
 
-
-  constructor() {}
-
+  constructor(private renderer: Renderer2) {
+  }
 
   ngAfterContentInit() {
-    this.toolbarContent.onMove.subscribe((event: MouseEvent) =>
-      this.onMove(event)
-    );
-      // this.toolbarContent.onUp.subscribe((event: MouseEvent) =>
-      //   this.onUp(event)
-      // )
-
-
+    this.toolbarContent.changeHeader.subscribe((event: HeaderSizeFlagEvent) =>
+      this.changeHeader(event)
+    )
   }
 
   ngAfterViewInit() {
     this.headerStyle = this.toolbarHeader.nativeElement.style;
 
-    console.log(this.toolbarHeader);
-
     if (this.color)
       this.headerStyle.backgroundColor = this.color;
 
     if (this.img) {
-      this.headerStyle.backgroundImage = 'url('+this.img+')';
-      this.headerStyle.height = this.currentImgHeight+'px'
+      this.headerStyle.backgroundImage = 'url(' + this.img + ')';
     }
   }
 
-  onMove(event: MouseEvent) {
-
-    if (!(this.mouseYlast == undefined)) {
-      console.log((event.clientY  - this.mouseYlast));
-
-      this.currentImgHeight += (event.clientY  - this.mouseYlast);
-      this.mouseYlast = undefined;
-      if (this.currentImgHeight <= 50) {
-        console.log('here');
-        this.headerStyle.backgroundImage = "";
-        this.currentImgHeight = 50;
-      } else {
-        this.headerStyle.backgroundImage = 'url('+this.img+')';
-        if (this.currentImgHeight >= 150) {
-          this.headerStyle.height = this.currentImgHeight + 'px';
-          this.currentImgHeight = 150;
-        } else {
-          this.mouseYlast = event.clientY;
-          this.headerStyle.height = this.currentImgHeight + 'px';
-        }
-      }
-      console.log(this.currentImgHeight + 'px');
+  changeHeader(event: HeaderSizeFlagEvent) {
+    console.log(this.headerBigSizeFlag);
+    console.log('handle emit');
+    if (event.headerBigSizeFlag) {
+      this.renderer.removeClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_min-height');
+      this.renderer.addClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_max-height');
     } else {
-      this.mouseYlast = event.clientY;
+      this.renderer.removeClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_max-height');
+      this.renderer.addClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_min-height');
     }
-
-
-    // console.log(event.clientY);
-  }
-  onUp(event: MouseEvent) {
-    console.log(event.clientY);
   }
 }
 

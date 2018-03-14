@@ -1,8 +1,11 @@
-<div class="my-toolbar" (onMove)="onMove($event)" (onUp)="onUp($event)">
+<div class="my-toolbar" (changeHeader)="changeHeader($event)" (onUp)="onUp($event)" >
   <!--<div #img class="my-toolbar__img"></div>-->
-  <div #header class="my-toolbar__header">{{title}}</div>
+  <div #header class="my-toolbar__header my-toolbar__header_max-height">
+    <ng-content></ng-content>
+  </div>
 
-  <ng-content></ng-content>
+  <ng-content select="my-toolbar-content"></ng-content>
+
 </div>
 
 

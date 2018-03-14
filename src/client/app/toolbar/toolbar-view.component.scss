@@ -3,6 +3,7 @@ $height: 50px;
 $border-radius: 5px;
 $disabled-color: #898989;
 $selected-color: blue;
+$transition-time: 0.5s;
 
 
 button {
@@ -12,18 +13,29 @@ button {
 }
 
 .my-toolbar {
-  width: $width;
+  //width: $width;
   margin: 0 auto;
   &__header {
-    width: 300px;
-    min-height: $height;
-    background-size: $width auto;
+    //width: 300px;
+    height: $height*3;
     background: #B4F0B6 no-repeat;
     vertical-align: bottom;
     color: white;
     font-size: large;
     text-align: center;
-    display: table-cell;
-    transition: background-color 0.2s;
+    //display: table-cell;
+    &_max-height {
+      height: 200px;
+      transition: all $transition-time;
+      background-size: 100%;
+
+    }
+    &_min-height {
+      height: $height;
+      transition: all $transition-time;
+      background-size: 100%;
+
+
+    }
   }
 }

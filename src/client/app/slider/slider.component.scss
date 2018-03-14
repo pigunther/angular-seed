@@ -1,10 +1,13 @@
 $slider-width: 200px;
 $height: 10px;
-$slider-height: 2px;
+$slider-height: 4px;
+$load-color: #0fa2f2;
+$slider-color: gray;
+$circle-color: blue;
 
 .slider {
-  height: 0;
-  border: $slider-height solid gray;
+  height: $slider-height;
+  background-color: $slider-color;
   margin: 10px;
   width: $slider-width;
 
@@ -12,9 +15,15 @@ $slider-height: 2px;
     border-radius: $height;
     height: 0;
     width: 0;
-    border: $height solid blue;
+    border: $height solid $circle-color;
 
     position: relative;
-    top: -$height;
+    top: -12px;
+  }
+
+  &__loader {
+    width: $height;
+    background-color: $load-color;
+    height: inherit;
   }
 }

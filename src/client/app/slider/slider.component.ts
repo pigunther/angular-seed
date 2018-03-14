@@ -36,25 +36,28 @@ export class MySlider implements AfterViewInit, OnDestroy {
 
   @Input()
   get val(): number {
-    return this.circlePos;
+    return this.circlePosition;
   }
 
   @Output() valChange = new EventEmitter();
 
   set val(value: number) {
-    this.circlePos = value;
-    this.valChange.emit(this.circlePos);
+    this.circlePosition = value;
+    this.valChange.emit(this.circlePosition);
   }
 
   @ViewChild('circle')
   circle: ElementRef;
 
-  slider: any;
+  @ViewChild('load')
+  loader: ElementRef;
 
-  circleStartPos: number;
-  sliderLen: number;
-  circleRad: number;
-  circlePos: number = 0;
+  slider: HTMLDivElement;
+
+  circleStartPosition: number;
+  sliderLength: number;
+  circleRadius: number;
+  circlePosition: number = 0;
 
   private circleMoveFlag: boolean = false;
 
@@ -66,22 +69,22 @@ export class MySlider implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.slider = this.circle.nativeElement.parentElement;
-    this.circleRad = +this.circle.nativeElement.clientLeft;
-    this.sliderLen = this.slider.clientLeft + this.slider.clientWidth;
+    this.circleRadius = +this.circle.nativeElement.clientLeft;
+    this.sliderLength = this.slider.clientLeft + this.slider.clientWidth;
     this.initStartPos();
 
     if (this.max != undefined && this.min != undefined) {
-      this.circlePos = this.min;
+      this.circlePosition = this.min;
     } else {
       this.max = 100;
       this.min = 0;
     }
 
-    this.setPosition(-this.circleRad);
+    this.setPosition(-this.circleRadius);
   }
 
   initStartPos() {
-    this.circleStartPos = this.slider.getBoundingClientRect().left;
+    this.circleStartPosition = this.slider.getBoundingClientRect().left;
   }
 
   onMouseDown(event: Event) {
@@ -101,37 +104,41 @@ export class MySlider implements AfterViewInit, OnDestroy {
       this.documentMouseUpListener = this.renderer.listen('document', 'mouseup', (e: MouseEvent) => {
         if (this.circleMoveFlag) {
           this.circleMoveFlag = false;
-          this.val = this.circlePos;
-          this.onChange.emit({startEvent: e, value: this.circlePos});
+          this.val = this.circlePosition;
+          this.onChange.emit({startEvent: e, value: this.circlePosition});
         }
       });
     }
   }
 
   onSliderClick(event: MouseEvent) {
-    let tmpCirclePos = this.circlePos;
+    let tmpCirclePos = this.circlePosition;
     this.setPosition(event.clientX);
-    this.val = this.circlePos;
-    if (tmpCirclePos != this.circlePos)
-      this.onChange.emit({startEvent: event, value: this.circlePos});
+    this.val = this.circlePosition;
+    if (tmpCirclePos != this.circlePosition) {
+      this.onChange.emit({startEvent: event, value: this.circlePosition});
+    }
+
   }
 
   setPosition(position: number) {
     this.initStartPos();
-    position = position - this.circleStartPos;
-    if (this.step)
-      position = Math.floor(position / (this.sliderLen / this.step)) * (this.sliderLen / this.step);
-    position -= this.circleRad;
+    position = position - this.circleStartPosition;
+    if (this.step) {
+      position = Math.round(position / (this.sliderLength / this.step)) * (this.sliderLength / this.step);
+    }
+    position -= this.circleRadius;
 
-    if (position + this.circleRad > this.sliderLen) {
-      position = this.sliderLen - this.circleRad;
-    } else if (position + this.circleRad < 0) {
-      position = -this.circleRad;
+    if (position + this.circleRadius > this.sliderLength) {
+      position = this.sliderLength - this.circleRadius;
+    } else if (position + this.circleRadius < 0) {
+      position = -this.circleRadius;
 
     }
 
-    this.circlePos = (position + this.circleRad) / (this.sliderLen) * (this.max - this.min) + this.min;
+    this.circlePosition = (position + this.circleRadius) / (this.sliderLength) * (this.max - this.min) + this.min;
     this.circle.nativeElement.style.left = position + 'px';
+    this.loader.nativeElement.style.width = (10+position) + 'px';
   }
 
 

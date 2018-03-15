@@ -1,15 +1,13 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   Component,
-  ContentChild,
-  ElementRef,
+  ElementRef, EventEmitter,
   Input,
+  NgZone, Output,
   Renderer2,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import {MyToolbarContent} from "./toolbar-content.component";
 import {HeaderSizeFlagEvent} from "./toolbar-events.model";
 
 
@@ -20,7 +18,7 @@ import {HeaderSizeFlagEvent} from "./toolbar-events.model";
   templateUrl: 'toolbar-view.component.html',
   styleUrls: ['toolbar-view.component.css']
 })
-export class MyToolbarView implements AfterContentInit, AfterViewInit {
+export class MyToolbarView implements AfterViewInit {
 
   @Input()
   img: string;
@@ -28,36 +26,47 @@ export class MyToolbarView implements AfterContentInit, AfterViewInit {
   @Input()
   color: string;
 
+  @Input()
+  styleClass: string;
+
+  @Output() onToolbarChange = new EventEmitter<HeaderSizeFlagEvent>();
+
   headerBigSizeFlag: boolean = true;
 
   headerStyle: any;
 
+  scrollListener: Function;
+
   @ViewChild('header', {read: ElementRef}) toolbarHeader: ElementRef;
-  @ContentChild(MyToolbarContent) toolbarContent: MyToolbarContent;
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private zone: NgZone) {
   }
 
-  ngAfterContentInit() {
-    this.toolbarContent.changeHeader.subscribe((event: HeaderSizeFlagEvent) =>
-      this.changeHeader(event)
-    )
-  }
 
   ngAfterViewInit() {
     this.headerStyle = this.toolbarHeader.nativeElement.style;
 
-    if (this.color)
-      this.headerStyle.backgroundColor = this.color;
+    this.zone.runOutsideAngular(() => {
+      if (!this.scrollListener) {
+        this.scrollListener = this.renderer.listen(window, 'scroll', (event: MouseEvent) => {
 
-    if (this.img) {
-      this.headerStyle.backgroundImage = 'url(' + this.img + ')';
-    }
+          let scrolled = window.pageYOffset || document.documentElement.scrollTop;
+
+          if (scrolled < 20 && this.headerBigSizeFlag) {
+            this.changeHeader({startEvent: event, headerBigSizeFlag: this.headerBigSizeFlag});
+            this.headerBigSizeFlag = !this.headerBigSizeFlag;
+          } else if (scrolled > 20 && !this.headerBigSizeFlag) {
+            this.changeHeader({startEvent: event, headerBigSizeFlag: this.headerBigSizeFlag});
+            this.headerBigSizeFlag = !this.headerBigSizeFlag;
+          }
+
+        });
+      }
+    });
+
   }
 
   changeHeader(event: HeaderSizeFlagEvent) {
-    console.log(this.headerBigSizeFlag);
-    console.log('handle emit');
     if (event.headerBigSizeFlag) {
       this.renderer.removeClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_min-height');
       this.renderer.addClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_max-height');
@@ -65,6 +74,7 @@ export class MyToolbarView implements AfterContentInit, AfterViewInit {
       this.renderer.removeClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_max-height');
       this.renderer.addClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_min-height');
     }
+    this.onToolbarChange.emit(event);
   }
 }
 

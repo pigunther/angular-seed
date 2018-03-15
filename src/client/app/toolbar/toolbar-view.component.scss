@@ -13,10 +13,15 @@ button {
 }
 
 .my-toolbar {
-  //width: $width;
+  //position: fixed;
+  //width: 100%;
+  //top: 0px;
+  //z-index: 99999;
   margin: 0 auto;
+  margin-bottom: $height;
   &__header {
     //width: 300px;
+    width: 100%;
     height: $height*3;
     background: #B4F0B6 no-repeat;
     vertical-align: bottom;

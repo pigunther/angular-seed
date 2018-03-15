@@ -1,11 +1,7 @@
-<div class="my-toolbar" (changeHeader)="changeHeader($event)" (onUp)="onUp($event)" >
-  <!--<div #img class="my-toolbar__img"></div>-->
-  <div #header class="my-toolbar__header my-toolbar__header_max-height">
+<div class="my-toolbar" (changeHeader)="changeHeader($event)" >
+  <div #header class="my-toolbar__header my-toolbar__header_max-height" [ngClass]="styleClass">
     <ng-content></ng-content>
   </div>
-
-  <ng-content select="my-toolbar-content"></ng-content>
-
 </div>
 
 

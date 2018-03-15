@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {IndexEvent} from "../tab/tap-panel-events.model";
+import {HeaderSizeFlagEvent} from "../toolbar/toolbar-events.model";
 
 
 @Component({
@@ -10,4 +10,10 @@ import {IndexEvent} from "../tab/tap-panel-events.model";
   styleUrls: ['toolbar-example.component.css']
 })
 export class ToolbarExampleComponent {
+  logs: string[] = [];
+
+  onToolbarChange(event: HeaderSizeFlagEvent) {
+    this.logs.unshift(`change: header=${event.startEvent}, is toolbar big? =${event.headerBigSizeFlag}`);
+  }
+
 }

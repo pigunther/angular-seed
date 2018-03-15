@@ -1,4 +1,4 @@
-<div class="slider" (click)="onSliderClick($event)">
+<div class="slider" (click)="onSliderClick($event)" [ngStyle] = "style">
   <div #load class="slider__loader"></div>
   <div #circle class="slider__circle" (mousedown)="onMouseDown($event)">
   </div>

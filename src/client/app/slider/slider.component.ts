@@ -32,19 +32,24 @@ export class MySlider implements AfterViewInit, OnDestroy {
   @Input()
   max: number;
 
+  @Input()
+  style: any;
+
   @Output() onChange = new EventEmitter<ValueChangeEvent>();
 
   @Input()
   get val(): number {
     return this.circlePosition;
   }
-
-  @Output() valChange = new EventEmitter();
-
   set val(value: number) {
     this.circlePosition = value;
+    //    this.circlePosition = (position + this.circleRadius) / (this.sliderLength) * (this.max - this.min) + this.min;
+
     this.valChange.emit(this.circlePosition);
   }
+  @Output() valChange = new EventEmitter();
+
+
 
   @ViewChild('circle')
   circle: ElementRef;
@@ -68,19 +73,21 @@ export class MySlider implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    console.log('view init');
     this.slider = this.circle.nativeElement.parentElement;
     this.circleRadius = +this.circle.nativeElement.clientLeft;
     this.sliderLength = this.slider.clientLeft + this.slider.clientWidth;
     this.initStartPos();
 
-    if (this.max != undefined && this.min != undefined) {
-      this.circlePosition = this.min;
-    } else {
+    if (this.max == undefined || this.min == undefined) {
       this.max = 100;
       this.min = 0;
     }
 
-    this.setPosition(-this.circleRadius);
+    if (this.val == undefined || this.val > this.max || this.val < this.min) {
+      this.circlePosition = this.min;
+    }
+    this.setPositionByCirclePosition();
   }
 
   initStartPos() {
@@ -94,7 +101,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
       if (!this.documentMouseMoveListener) {
         this.documentMouseMoveListener = this.renderer.listen('document', 'mousemove', (e: MouseEvent) => {
           if (this.circleMoveFlag) {
-            this.setPosition(e.clientX);
+            this.setPosition(e.clientX, false);
           }
         });
       }
@@ -112,16 +119,24 @@ export class MySlider implements AfterViewInit, OnDestroy {
   }
 
   onSliderClick(event: MouseEvent) {
-    let tmpCirclePos = this.circlePosition;
-    this.setPosition(event.clientX);
+    let oldCirclePosition = this.circlePosition;
+
+    this.setPosition(event.clientX, true);
+
+    if ((oldCirclePosition < this.circlePosition + this.circleRadius/(this.sliderLength) * (this.max - this.min) &&
+        oldCirclePosition > this.circlePosition - this.circleRadius/(this.sliderLength) * (this.max - this.min))) {
+      console.log(this.circlePosition, oldCirclePosition);
+      this.circlePosition = oldCirclePosition;
+      console.log('here');
+    }
     this.val = this.circlePosition;
-    if (tmpCirclePos != this.circlePosition) {
+    if (oldCirclePosition != this.circlePosition) {
       this.onChange.emit({startEvent: event, value: this.circlePosition});
     }
 
   }
 
-  setPosition(position: number) {
+  setPosition(position: number, onSlider: boolean) {
     this.initStartPos();
     position = position - this.circleStartPosition;
     if (this.step) {
@@ -135,10 +150,27 @@ export class MySlider implements AfterViewInit, OnDestroy {
       position = -this.circleRadius;
 
     }
-
+    let oldCirclePosition = this.circlePosition;
     this.circlePosition = (position + this.circleRadius) / (this.sliderLength) * (this.max - this.min) + this.min;
+
+    if (onSlider) {
+      if ((oldCirclePosition < this.circlePosition + this.circleRadius/(this.sliderLength) * (this.max - this.min) &&
+          oldCirclePosition > this.circlePosition - this.circleRadius/(this.sliderLength) * (this.max - this.min))) {
+        this.circlePosition = oldCirclePosition;
+      } else {
+        this.circle.nativeElement.style.left = position + 'px';
+        this.loader.nativeElement.style.width = (this.circleRadius+position) + 'px';
+      }
+    } else {
+      this.circle.nativeElement.style.left = position + 'px';
+      this.loader.nativeElement.style.width = (this.circleRadius+position) + 'px';
+    }
+  }
+
+  setPositionByCirclePosition() {
+    let position = (this.circlePosition-this.min)/(this.max - this.min) * this.sliderLength + this.circleStartPosition - 2*this.circleRadius;
     this.circle.nativeElement.style.left = position + 'px';
-    this.loader.nativeElement.style.width = (10+position) + 'px';
+    this.loader.nativeElement.style.width = (this.circleRadius+position) + 'px';
   }
 
 

@@ -74,7 +74,9 @@ export class MyToolbarView implements AfterViewInit {
       this.renderer.removeClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_max-height');
       this.renderer.addClass(this.toolbarHeader.nativeElement, 'my-toolbar__header_min-height');
     }
-    this.onToolbarChange.emit(event);
+    this.zone.run(() => {
+      this.onToolbarChange.emit(event);
+    });
   }
 }
 

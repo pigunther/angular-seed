@@ -1,31 +1,59 @@
-@import "../normalize.scss";
+.toolbar {
+  &__container {
+    margin: auto 10%;
+    width: 80%;
+    height: 100%;
+  }
 
+  &__logo-container {
+    float: left;
+    height: 100%;
+  }
 
-.for-ul {
-  display: flex;
-  flex-direction: row;
-  list-style: none;
-  justify-content: space-around;
-  color: white;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-  height: inherit;
+  &__image {
+    float: left;
+    position: relative;
+    top: 5%;
+    height: 90%;
+  }
 
-  & a:hover, a:visited, a:active {
-    color: beige;
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    float: right;
+
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+    height: inherit;
+    width: 30%;
+
+    color: black;
+
+    & > li {
+      display: inline-block;
+      & > a:hover, a:visited, a:active {
+        color: black;
+      }
+    }
   }
 }
 
-.image {
-  background-image: url('https://twistedsifter.files.wordpress.com/2016/07/dulmen_bornste_waldweg.jpg');
-  background-size: auto 90%;
-  height: 90%;
-  width: 30%;
-  background-repeat: no-repeat;
-}
 
 .class-for-toolbar {
-  background-image: url('https://www.firestock.ru/wp-content/uploads/2015/11/Dollar-Photo-Club-Teal-Square-Background-700x393.jpg') !important;
+  background-image: url('../../assets/image/fon.jpg') !important;
+  //background-image: url('https://habrastorage.org/storage/habraeffect/97/4a/974ac76887e9a13b12e4fd97c617208b.jpg') !important;
   background-color: blue !important;
+}
+
+
+.console {
+  bottom: 0;
+  height: 100px;
+  min-width: 90%;
+  overflow: scroll;
+  border: 1px solid darkgray;
 }

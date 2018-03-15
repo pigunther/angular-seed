@@ -16,7 +16,7 @@ button {
   margin: 0 auto;
   &__header {
     width: 100%;
-    height: $height*3;
+    height: $height*2;
     background: #B4F0B6 no-repeat;
     vertical-align: bottom;
     color: white;
@@ -24,7 +24,7 @@ button {
     text-align: center;
 
     &_max-height {
-      height: 200px;
+      height: $height*2;
       transition: all $transition-time;
       background-size: 100%;
 
@@ -40,10 +40,10 @@ button {
     position: fixed;
     top: 0;
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: $height;
   }
 
   &__sticky + .content{
-    padding-top: 50px;
+    padding-top: $height;
   }
 }

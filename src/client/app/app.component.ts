@@ -9,7 +9,7 @@ import './operators';
   moduleId: module.id,
   selector: 'sd-app',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css'],
+  styleUrls: ['app.component.css', 'normalize.css'],
 })
 export class AppComponent {
   constructor() {

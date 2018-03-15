@@ -1,11 +1,3 @@
-.console {
-  position: absolute;
-  bottom: 0;
-  height: 100px;
-  min-width: 90%;
-  overflow: scroll;
-  border: 1px solid darkgray;
-}
 
 
 .for-ul {
@@ -30,4 +22,9 @@
   height: 90%;
   width: 30%;
   background-repeat: no-repeat;
+}
+
+.class-for-toolbar {
+  background-image: url('https://www.firestock.ru/wp-content/uploads/2015/11/Dollar-Photo-Club-Teal-Square-Background-700x393.jpg') !important;
+  background-color: blue !important;
 }

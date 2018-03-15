@@ -13,7 +13,7 @@ export class ToolbarExampleComponent {
   logs: string[] = [];
 
   onToolbarChange(event: HeaderSizeFlagEvent) {
-    this.logs.unshift(`change: header=${event.startEvent}, is toolbar big? =${event.headerBigSizeFlag}`);
+    this.logs.unshift(`toolbar's changed: is toolbar big? =${event.headerBigSizeFlag}`);
   }
 
 }

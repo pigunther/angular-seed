@@ -13,14 +13,8 @@ button {
 }
 
 .my-toolbar {
-  //position: fixed;
-  //width: 100%;
-  //top: 0px;
-  //z-index: 99999;
   margin: 0 auto;
-  margin-bottom: $height;
   &__header {
-    //width: 300px;
     width: 100%;
     height: $height*3;
     background: #B4F0B6 no-repeat;
@@ -28,7 +22,7 @@ button {
     color: white;
     font-size: large;
     text-align: center;
-    //display: table-cell;
+
     &_max-height {
       height: 200px;
       transition: all $transition-time;
@@ -39,8 +33,6 @@ button {
       height: $height;
       transition: all $transition-time;
       background-size: 100%;
-
-
     }
   }
 }

@@ -35,22 +35,31 @@ export class MyToolbarView implements AfterViewInit {
 
   headerStyle: any;
 
+  yPosition: number;
+
   scrollListener: Function;
 
   @ViewChild('header', {read: ElementRef}) toolbarHeader: ElementRef;
 
-  constructor(private renderer: Renderer2, private zone: NgZone) {
+  constructor(private renderer: Renderer2, private zone: NgZone, private elementRef: ElementRef) {
   }
 
 
   ngAfterViewInit() {
     this.headerStyle = this.toolbarHeader.nativeElement.style;
+    this.yPosition = this.elementRef.nativeElement.getBoundingClientRect().top;
 
     this.zone.runOutsideAngular(() => {
       if (!this.scrollListener) {
         this.scrollListener = this.renderer.listen(window, 'scroll', (event: MouseEvent) => {
 
           let scrolled = window.pageYOffset || document.documentElement.scrollTop;
+
+          if (scrolled >= this.yPosition) {
+            this.renderer.addClass(this.elementRef.nativeElement, 'my-toolbar__sticky');
+          } else {
+            this.renderer.removeClass(this.elementRef.nativeElement, 'my-toolbar__sticky');
+          }
 
           if (scrolled < 20 && this.headerBigSizeFlag) {
             this.changeHeader({startEvent: event, headerBigSizeFlag: this.headerBigSizeFlag});

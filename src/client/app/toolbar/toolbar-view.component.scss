@@ -34,5 +34,16 @@ button {
       transition: all $transition-time;
       background-size: 100%;
     }
+
+  }
+  &__sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  &__sticky + .content{
+    padding-top: 50px;
   }
 }

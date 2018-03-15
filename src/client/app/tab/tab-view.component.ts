@@ -22,7 +22,6 @@ export class MyTabView implements AfterContentInit {
 
   tabs: MyTabPanel[];
 
-
   @ContentChildren(MyTabPanel) tabPanels: QueryList<MyTabPanel>;
 
   @Output() onChange = new EventEmitter<IndexEvent>();

@@ -30,7 +30,6 @@ export class MyTabPanel implements AfterContentInit, AfterViewInit {
 
   closed: boolean;
 
-
   ngAfterContentInit() {
     this.innerTemplate = this.customContent;
   }

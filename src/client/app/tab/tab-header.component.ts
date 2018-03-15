@@ -17,7 +17,6 @@ export class MyTabHeader {
   @Output() onTabClick = new EventEmitter<TabEvent>();
   @Output() onTabClose = new EventEmitter<TabEvent>();
 
-
   tabClick(event: Event, tab: MyTabPanel) {
     if (!tab.selected && !tab.disabled) this.onTabClick.emit({startEvent: event, tab: tab});
   }

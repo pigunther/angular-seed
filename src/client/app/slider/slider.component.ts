@@ -43,13 +43,9 @@ export class MySlider implements AfterViewInit, OnDestroy {
   }
   set val(value: number) {
     this.circlePosition = value;
-    //    this.circlePosition = (position + this.circleRadius) / (this.sliderLength) * (this.max - this.min) + this.min;
-
     this.valChange.emit(this.circlePosition);
   }
   @Output() valChange = new EventEmitter();
-
-
 
   @ViewChild('circle')
   circle: ElementRef;
@@ -73,7 +69,6 @@ export class MySlider implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    console.log('view init');
     this.slider = this.circle.nativeElement.parentElement;
     this.circleRadius = +this.circle.nativeElement.clientLeft;
     this.sliderLength = this.slider.clientLeft + this.slider.clientWidth;
@@ -125,9 +120,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
 
     if ((oldCirclePosition < this.circlePosition + this.circleRadius/(this.sliderLength) * (this.max - this.min) &&
         oldCirclePosition > this.circlePosition - this.circleRadius/(this.sliderLength) * (this.max - this.min))) {
-      console.log(this.circlePosition, oldCirclePosition);
       this.circlePosition = oldCirclePosition;
-      console.log('here');
     }
     this.val = this.circlePosition;
     if (oldCirclePosition != this.circlePosition) {

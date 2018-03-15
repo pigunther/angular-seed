@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef, EventEmitter,
   Input,
-  NgZone, Output,
+  NgZone, OnDestroy, Output,
   Renderer2,
   ViewChild,
   ViewEncapsulation
@@ -18,13 +18,7 @@ import {HeaderSizeFlagEvent} from "./toolbar-events.model";
   templateUrl: 'toolbar-view.component.html',
   styleUrls: ['toolbar-view.component.css']
 })
-export class MyToolbarView implements AfterViewInit {
-
-  @Input()
-  img: string;
-
-  @Input()
-  color: string;
+export class MyToolbarView implements AfterViewInit, OnDestroy {
 
   @Input()
   styleClass: string;
@@ -33,21 +27,17 @@ export class MyToolbarView implements AfterViewInit {
 
   headerBigSizeFlag: boolean = true;
 
-  headerStyle: any;
-
-  yPosition: number;
-
   scrollListener: Function;
+
+  TOP_SCROLL: number = 45;
 
   @ViewChild('header', {read: ElementRef}) toolbarHeader: ElementRef;
 
-  constructor(private renderer: Renderer2, private zone: NgZone, private elementRef: ElementRef) {
+  constructor(private renderer: Renderer2, private zone: NgZone) {
   }
 
 
   ngAfterViewInit() {
-    this.headerStyle = this.toolbarHeader.nativeElement.style;
-    this.yPosition = this.elementRef.nativeElement.getBoundingClientRect().top;
 
     this.zone.runOutsideAngular(() => {
       if (!this.scrollListener) {
@@ -55,16 +45,10 @@ export class MyToolbarView implements AfterViewInit {
 
           let scrolled = window.pageYOffset || document.documentElement.scrollTop;
 
-          if (scrolled >= this.yPosition) {
-            this.renderer.addClass(this.elementRef.nativeElement, 'my-toolbar__sticky');
-          } else {
-            this.renderer.removeClass(this.elementRef.nativeElement, 'my-toolbar__sticky');
-          }
-
-          if (scrolled < 20 && this.headerBigSizeFlag) {
+          if (scrolled < this.TOP_SCROLL && this.headerBigSizeFlag) {
             this.changeHeader({startEvent: event, headerBigSizeFlag: this.headerBigSizeFlag});
             this.headerBigSizeFlag = !this.headerBigSizeFlag;
-          } else if (scrolled > 20 && !this.headerBigSizeFlag) {
+          } else if (scrolled > this.TOP_SCROLL && !this.headerBigSizeFlag) {
             this.changeHeader({startEvent: event, headerBigSizeFlag: this.headerBigSizeFlag});
             this.headerBigSizeFlag = !this.headerBigSizeFlag;
           }
@@ -86,6 +70,10 @@ export class MyToolbarView implements AfterViewInit {
     this.zone.run(() => {
       this.onToolbarChange.emit(event);
     });
+  }
+
+  ngOnDestroy() {
+    this.scrollListener();
   }
 }
 

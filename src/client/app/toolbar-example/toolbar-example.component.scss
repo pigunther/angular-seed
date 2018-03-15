@@ -1,3 +1,4 @@
+@import "../normalize";
 .toolbar {
   &__container {
     margin: auto 10%;
@@ -49,11 +50,3 @@
   background-color: blue !important;
 }
 
-
-.console {
-  bottom: 0;
-  height: 100px;
-  min-width: 90%;
-  overflow: scroll;
-  border: 1px solid darkgray;
-}

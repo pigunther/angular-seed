@@ -1,9 +1,10 @@
 
 .console {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   height: 100px;
   min-width: 90%;
   overflow: scroll;
   border: 1px solid darkgray;
+  background-color: white;
 }

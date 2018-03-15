@@ -1,20 +1,24 @@
+<div class="container">
+  <p>default slider (min=0, max=100)</p>
+  <my-slider [(val)]="val" (onChange)="onSliderStop($event)"></my-slider>
+  <div>current val={{val}}</div>
+  <br/>
 
-<div style="width:200%; height:10px"></div>
+  <p>slider with style (width=400px) (min=0, max=100)</p>
+  <my-slider [(val)]="val4" (onChange)="onSliderStop($event)" [style]="{'width': '400px'}"></my-slider>
+  <div>current val={{val4}}</div>
+  <br/>
 
-<p>default slider (min=0, max=100)</p>
-<my-slider [(val)]="val" (onChange)="onSliderStop($event)"></my-slider>
-<div>current val={{val}}</div>
-<br/>
+  <p>slider with min=10 max=1000</p>
+  <my-slider [(val)]="val2" [max]="1000" [min]="10" (onChange)="onSliderStop($event)"></my-slider>
+  <div>current val={{val2}}</div>
+  <br/>
 
-<p>slider with min=10 max=1000</p>
-<my-slider [(val)]="val2" [max]="1000" [min]="10" (onChange)="onSliderStop($event)"></my-slider>
-<div>current val={{val2}}</div>
-<br/>
-
-<p>slider with step 7 min=0 max=100</p>
-<my-slider [(val)]="val3" [step]="7" (onChange)="onSliderStop($event)" ></my-slider>
-<div>current val={{val3}}</div>
-<br/>
+  <p>slider with step 7 min=0 max=100</p>
+  <my-slider [(val)]="val3" [step]="7" (onChange)="onSliderStop($event)" ></my-slider>
+  <div>current val={{val3}}</div>
+  <br/>
+</div>
 
 
 <div class="console">

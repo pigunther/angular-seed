@@ -26,24 +26,30 @@ export class MyToolbarView implements AfterViewInit, OnDestroy {
   @Output() onToolbarChange = new EventEmitter<HeaderSizeFlagEvent>();
 
   headerBigSizeFlag: boolean = true;
-
+  yPosition: number;
   scrollListener: Function;
 
   TOP_SCROLL: number = 45;
 
   @ViewChild('header', {read: ElementRef}) toolbarHeader: ElementRef;
 
-  constructor(private renderer: Renderer2, private zone: NgZone) {
+  constructor(private renderer: Renderer2, private zone: NgZone, private elementRef: ElementRef) {
   }
 
 
   ngAfterViewInit() {
-
+    this.yPosition = this.elementRef.nativeElement.getBoundingClientRect().top;
     this.zone.runOutsideAngular(() => {
       if (!this.scrollListener) {
         this.scrollListener = this.renderer.listen(window, 'scroll', (event: MouseEvent) => {
 
           let scrolled = window.pageYOffset || document.documentElement.scrollTop;
+
+          if (scrolled >= this.yPosition) {
+            this.renderer.addClass(this.elementRef.nativeElement, 'my-toolbar__sticky');
+          } else {
+            this.renderer.removeClass(this.elementRef.nativeElement, 'my-toolbar__sticky');
+          }
 
           if (scrolled < this.TOP_SCROLL && this.headerBigSizeFlag) {
             this.changeHeader({startEvent: event, headerBigSizeFlag: this.headerBigSizeFlag});

@@ -13,8 +13,6 @@ button {
 
 .my-toolbar {
   margin: 0 auto;
-  position: sticky;
-  top: 0;
   &__header {
     width: 100%;
     height: $height*2;
@@ -32,5 +30,15 @@ button {
     &_min-height {
       height: $height;
     }
+  }
+  &__sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-bottom: $height;
+  }
+
+  &__sticky + .content{
+    padding-top: $height;
   }
 }

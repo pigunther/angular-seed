@@ -29,7 +29,7 @@ export class MyToolbarView implements AfterViewInit, OnDestroy {
   yPosition: number;
   scrollListener: Function;
 
-  TOP_SCROLL: number = 45;
+  readonly TOP_SCROLL: number = 45;
 
   @ViewChild('header', {read: ElementRef}) toolbarHeader: ElementRef;
 

@@ -7,23 +7,32 @@ $circle-color: blue;
 
 .slider {
   height: $slider-height;
-  background-color: $slider-color;
-  margin: 10px;
+  padding: 10px;
   width: $slider-width;
+  margin-bottom: 10px;
 
   &__circle {
     border-radius: $height;
     height: 0;
     width: 0;
     border: $height solid $circle-color;
-
     position: relative;
-    top: -12px;
+    top: -16px;
+    z-index: 100;
   }
-
   &__loader {
-    width: $height;
+    width: 0;
     background-color: $load-color;
     height: inherit;
+    position: relative;
+    z-index: 10;
+  }
+  &__unloader {
+    width: inherit;
+    background-color: $slider-color;
+    height: inherit;
+    position: relative;
+    top: -4px;
+    z-index: 1;
   }
 }

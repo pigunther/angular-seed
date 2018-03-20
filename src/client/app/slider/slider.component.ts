@@ -33,7 +33,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
   max: number;
 
   @Input()
-  style: any;
+  styleClass: string;
 
   @Output() onChange = new EventEmitter<ValueChangeEvent>();
 
@@ -41,10 +41,12 @@ export class MySlider implements AfterViewInit, OnDestroy {
   get val(): number {
     return this.circlePosition;
   }
+
   set val(value: number) {
     this.circlePosition = value;
     this.valChange.emit(this.circlePosition);
   }
+
   @Output() valChange = new EventEmitter();
 
   @ViewChild('circle')
@@ -70,7 +72,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.slider = this.circle.nativeElement.parentElement;
-    this.circleRadius = +this.circle.nativeElement.clientLeft;
+    this.circleRadius = this.circle.nativeElement.clientLeft;
     this.sliderLength = this.slider.clientLeft + this.slider.clientWidth;
     this.initStartPos();
 
@@ -83,20 +85,13 @@ export class MySlider implements AfterViewInit, OnDestroy {
       this.circlePosition = this.min;
     }
     this.setPositionByCirclePosition();
-  }
 
-  initStartPos() {
-    this.circleStartPosition = this.slider.getBoundingClientRect().left;
-  }
-
-  onMouseDown(event: Event) {
-    this.circleMoveFlag = true;
 
     this.ngZone.runOutsideAngular(() => {
       if (!this.documentMouseMoveListener) {
         this.documentMouseMoveListener = this.renderer.listen('document', 'mousemove', (e: MouseEvent) => {
           if (this.circleMoveFlag) {
-            this.setPosition(e.clientX, false);
+            this.setPosition(e.clientX);
           }
         });
       }
@@ -113,15 +108,18 @@ export class MySlider implements AfterViewInit, OnDestroy {
     }
   }
 
+  initStartPos() {
+    this.circleStartPosition = this.slider.getBoundingClientRect().left;
+  }
+
+  onMouseDown() {
+    this.circleMoveFlag = true;
+  }
+
   onSliderClick(event: MouseEvent) {
     let oldCirclePosition = this.circlePosition;
+    this.setPosition(event.clientX);
 
-    this.setPosition(event.clientX, true);
-
-    if ((oldCirclePosition < this.circlePosition + this.circleRadius/(this.sliderLength) * (this.max - this.min) &&
-        oldCirclePosition > this.circlePosition - this.circleRadius/(this.sliderLength) * (this.max - this.min))) {
-      this.circlePosition = oldCirclePosition;
-    }
     this.val = this.circlePosition;
     if (oldCirclePosition != this.circlePosition) {
       this.onChange.emit({startEvent: event, value: this.circlePosition});
@@ -129,7 +127,7 @@ export class MySlider implements AfterViewInit, OnDestroy {
 
   }
 
-  setPosition(position: number, onSlider: boolean) {
+  setPosition(position: number) {
     this.initStartPos();
     position = position - this.circleStartPosition;
     if (this.step) {
@@ -143,27 +141,24 @@ export class MySlider implements AfterViewInit, OnDestroy {
       position = -this.circleRadius;
 
     }
-    let oldCirclePosition = this.circlePosition;
-    this.circlePosition = (position + this.circleRadius) / (this.sliderLength) * (this.max - this.min) + this.min;
 
-    if (onSlider) {
-      if ((oldCirclePosition < this.circlePosition + this.circleRadius/(this.sliderLength) * (this.max - this.min) &&
-          oldCirclePosition > this.circlePosition - this.circleRadius/(this.sliderLength) * (this.max - this.min))) {
-        this.circlePosition = oldCirclePosition;
-      } else {
-        this.circle.nativeElement.style.left = position + 'px';
-        this.loader.nativeElement.style.width = (this.circleRadius+position) + 'px';
-      }
-    } else {
-      this.circle.nativeElement.style.left = position + 'px';
-      this.loader.nativeElement.style.width = (this.circleRadius+position) + 'px';
-    }
+    this.circlePosition = (position + this.circleRadius) / (this.sliderLength) * (this.max - this.min) + this.min;
+    this.circle.nativeElement.style.left = position + 'px';
+    this.loader.nativeElement.style.width = (this.circleRadius + position) + 'px';
   }
 
   setPositionByCirclePosition() {
-    let position = (this.circlePosition-this.min)/(this.max - this.min) * this.sliderLength + this.circleStartPosition - 2*this.circleRadius;
+    let position = (this.circlePosition - this.min) / (this.max - this.min) * this.sliderLength - this.circleRadius;
     this.circle.nativeElement.style.left = position + 'px';
-    this.loader.nativeElement.style.width = (this.circleRadius+position) + 'px';
+    this.loader.nativeElement.style.width = (this.circleRadius + position) + 'px';
+  }
+
+  dragstart(): boolean {
+    return false;
+  }
+
+  stopEvent(event: MouseEvent) {
+    event.stopPropagation();
   }
 
 

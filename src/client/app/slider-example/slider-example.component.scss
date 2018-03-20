@@ -1,4 +1,8 @@
 .container {
   width: 90%;
   margin: 0 auto;
+  user-select: none;
+}
+my-slider .class-for-slider {
+  width: 400px;
 }

@@ -5,8 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AboutModule } from './about/about.module';
-import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import {TabsExampleModule} from "./tabs-example/tabs-example.module";
@@ -21,8 +19,6 @@ import {ToolbarExampleModule} from "./toolbar-example/toolbar-example.module";
     CoreModule,
     HttpClientModule,
     AppRoutingModule,
-    AboutModule,
-    HomeModule,
     SharedModule.forRoot(),
     TabsExampleModule,
     SliderExampleModule,

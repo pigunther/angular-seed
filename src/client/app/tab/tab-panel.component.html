@@ -1,7 +1,7 @@
 <div class="my-tab-panel__content" *ngIf="selected">
   <ng-content></ng-content>
-  <ng-container *ngIf="selected && innerTemplate">
-    <ng-container *ngTemplateOutlet="innerTemplate">
+  <ng-container *ngIf="selected && customContentTemplate">
+    <ng-container *ngTemplateOutlet="customContentTemplate">
     </ng-container>
   </ng-container>
 </div>

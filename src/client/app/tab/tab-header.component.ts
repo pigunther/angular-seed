@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
 import {MyTabPanel} from "./tab-panel.component";
 import {TabEvent} from "./tap-panel-events.model";
 
-// todo write slider
 @Component({
   moduleId: module.id,
   encapsulation: ViewEncapsulation.None,

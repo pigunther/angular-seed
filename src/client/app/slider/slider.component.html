@@ -1,9 +1,9 @@
-<div class="slider" (click)="onSliderClick($event)" [ngStyle] = "style">
+
+<div class="slider" (click)="onSliderClick($event)" [ngClass] = "styleClass" (dragstart)="dragstart()">
   <div #load class="slider__loader"></div>
-  <div #circle class="slider__circle" (mousedown)="onMouseDown($event)">
+  <div #unload class="slider__unloader"></div>
+  <div #circle class="slider__circle" (mousedown)="onMouseDown()"
+    (dragstart)="dragstart()"
+    (click)="stopEvent($event)">
   </div>
 </div>
-<!--<ng-container *ngIf="max != undefined && min != undefined">-->
-  <!--<p>min {{min}} - current {{circlePosition}} - max {{max}}</p>-->
-<!--</ng-container>-->
-

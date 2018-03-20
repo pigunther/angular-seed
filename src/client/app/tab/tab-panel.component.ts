@@ -1,9 +1,9 @@
 import {
-  AfterContentInit, AfterViewInit,
+  AfterContentInit,
+  AfterViewInit,
   Component,
   ContentChild,
   Input,
-  OnInit,
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
@@ -16,26 +16,14 @@ import {
   templateUrl: 'tab-panel.component.html',
   styleUrls: ['tab-panel.component.css']
 })
-export class MyTabPanel implements AfterContentInit, AfterViewInit {
+export class MyTabPanel  {
 
   @Input() header: string;
 
   @Input() selected: boolean = false;
   @Input() disabled: boolean = false;
   @Input() closable: boolean = false;
-
-  @ContentChild(TemplateRef) customContent: TemplateRef<any>;
-
-  innerTemplate: TemplateRef<any>;
+  @ContentChild("customContent") customContentTemplate: TemplateRef<any>;
 
   closed: boolean;
-
-  ngAfterContentInit() {
-    this.innerTemplate = this.customContent;
-  }
-
-  ngAfterViewInit() {
-    this.innerTemplate = this.customContent;
-  }
-
 }
